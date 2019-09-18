@@ -1,0 +1,7 @@
+AllCops:
+  TargetRubyVersion: 2.6.3
+inherit_gem:
+  rubocop-rails_config:
+    - config/rails.yml
+Style/FrozenStringLiteralComment:
+  Enabled: false
