@@ -3,11 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController do
-  describe 'Base API Url' do
-    before { get :index, format: :json }
-    it 'should return with status 200' do
-      expect(response).to have_http_status(200)
-      expect(json['message']).to eq('Welcome to Hello-Books API')
+  describe 'before actions' do
+    context 'skipped action' do
+      it { should use_before_action(:authenticate_request) }
     end
   end
 end

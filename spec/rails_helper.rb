@@ -11,6 +11,9 @@ require 'rspec/rails'
 require 'database_cleaner'
 require 'simplecov'
 require 'coveralls'
+require 'codacy-coverage'
+
+Codacy::Reporter.start
 Coveralls.wear!
 SimpleCov.start 'rails' do
   add_filter '/bin/'
