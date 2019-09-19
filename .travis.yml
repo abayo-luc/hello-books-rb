@@ -1,0 +1,20 @@
+language: ruby
+rvm:
+  - 2.2
+  - jruby
+  - truffleruby
+  - 2.0.0-p247
+addons:
+  postgresql: '9.6'
+after_success:
+  - bundle exec codeclimate-test-reporter
+before_script:
+  - cp config/database.travis.yml config/database.yml
+  - psql -c 'create database travis_ci_test;' -U postgres
+dist: trusty
+language: ruby
+rvm:
+  - 2.6.3
+script:
+  - bundle install
+  - bundle exec rspec
