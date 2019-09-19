@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Build Status](https://travis-ci.com/abayo-luc/hello-books.svg?branch=develop)](https://travis-ci.com/abayo-luc/hello-books)
 
-Things you may want to cover:
+[![Coverage Status](https://coveralls.io/repos/github/abayo-luc/hello-books/badge.svg?branch=develop)](https://coveralls.io/github/abayo-luc/hello-books?branch=develop)
 
-* Ruby version
+# Hello-Books API
 
-* System dependencies
+## GET STARTED
 
-* Configuration
+> - Install all gem: `bundle install`
+> - Create database: `rails db:create`
+> - Run Migration: `rails db:migrate`
+> - Run test: `bundle exec rspec`
 
-* Database creation
+## ENPOINTS
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Welcome endpoint `GET /`

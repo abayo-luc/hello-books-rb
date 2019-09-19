@@ -1,0 +1,2 @@
+rubocop:
+  config_file: .hound.rubocop.yml
