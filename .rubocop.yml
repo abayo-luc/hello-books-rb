@@ -5,3 +5,8 @@ inherit_gem:
     - config/rails.yml
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  SupportedStyles:
+    - single_quotes
+    - double_quotes
