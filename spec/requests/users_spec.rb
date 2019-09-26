@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Users API', type: :request do
+RSpec.describe 'Users Api', type: :request do
   describe 'POST /users' do
     let(:valid_attributes) {  { email: 'valid@example.com', password: 'password', first_name: 'Luc', last_name: 'Abayo' } }
     context 'when request is valid' do
-      before { post '/v1/users', params: valid_attributes  }
+      before { post '/api/v1/users', params: valid_attributes  }
       it 'should create user' do
         expect(response).to have_http_status(201)
         expect(json['message']).to eql('User registered successuflly')
@@ -15,7 +15,7 @@ RSpec.describe 'Users API', type: :request do
       end
     end
     context 'when request is invalid' do
-      before { post '/v1/users', params: { first_name: 'luc' } }
+      before { post '/api/v1/users', params: { first_name: 'luc' } }
       it 'should not create user' do
         expect(response).to have_http_status(400)
       end

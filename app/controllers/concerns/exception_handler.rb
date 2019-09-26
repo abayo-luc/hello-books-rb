@@ -7,4 +7,5 @@ module ExceptionHandler
   class InvalidToken < StandardError; end
   class ExpiredSignature < StandardError; end
   class DecodeError < StandardError; end
+  class NotAuthorized < StandardError; end
 end
