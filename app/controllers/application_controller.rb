@@ -3,6 +3,10 @@ class ApplicationController < ActionController::API
   attr_reader :current_user
   include ExceptionHandler
 
+  def authorize_admin
+    raise ExceptionHandler::NotAuthorized unless current_user&.super_admin? || current_user&.admin?
+  end
+
   rescue_from ActiveRecord::RecordNotFound do
     render json: {
       error: 'Not found'
@@ -10,8 +14,8 @@ class ApplicationController < ActionController::API
   end
   rescue_from ExceptionHandler::NotAuthorized do
     render json: {
-     error: 'Not authorized'
-    }, status: :not_authorized
+     error: 'You are not authorized to perfom this action'
+    }, status: :forbidden
   end
 
   private
@@ -20,8 +24,12 @@ class ApplicationController < ActionController::API
       decoded = WebToken.decode(token)
     rescue
       @current_user = nil
-      render json: { error: 'Not Authorized' }, status: 401 unless @current_user
+      render json: { error: 'The user must provide a
+         valid token to authenticate' },
+         status: 401 unless @current_user
     else
-      @current_user = User.where(id: decoded['id'], email: decoded['email'])[0]
+      @current_user = User.where(id: decoded['id'],
+        email: decoded['email']
+        )[0]
     end
 end

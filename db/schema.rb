@@ -10,11 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_25_151108) do
+ActiveRecord::Schema.define(version: 2019_09_26_125303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "page_number", null: false
+    t.string "title", null: false
+    t.string "language", null: false
+    t.string "category", default: [], array: true
+    t.string "authors", default: [], array: true
+    t.text "description"
+    t.string "isbn", null: false
+    t.integer "inventory", default: 1, null: false
+    t.datetime "published_at"
+    t.string "publishers", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
