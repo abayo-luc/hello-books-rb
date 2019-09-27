@@ -33,4 +33,15 @@ RSpec.describe Book, type: :model do
       end
     end
   end
+
+  describe 'Book Association' do
+    it 'shoul have and belongs many categories' do
+      assoc = described_class.reflect_on_association(:categories)
+      expect(assoc.macro).to eql(:has_and_belongs_to_many)
+    end
+    it 'should have and belongs many authors' do
+      assoc = described_class.reflect_on_association(:authors)
+      expect(assoc.macro).to eql(:has_and_belongs_to_many)
+    end
+  end
 end

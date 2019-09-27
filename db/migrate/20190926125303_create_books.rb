@@ -4,8 +4,6 @@ class CreateBooks < ActiveRecord::Migration[6.0]
       t.integer :page_number, null: false
       t.string :title, null: false, unique: true
       t.string :language, null: false 
-      t.string :category, array: true, default: []
-      t.string :authors, array: true, default: []
       t.text :description
       t.string :isbn, null:false, unique: true 
       t.integer :inventory, null: false, default: 1

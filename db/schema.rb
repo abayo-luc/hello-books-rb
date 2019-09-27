@@ -10,18 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_125303) do
+ActiveRecord::Schema.define(version: 2019_09_27_131552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "authors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "country"
+    t.text "bio"
+    t.datetime "birth_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_authors_on_name", unique: true
+  end
+
+  create_table "authors_books", id: false, force: :cascade do |t|
+    t.uuid "book_id"
+    t.uuid "author_id"
+    t.index ["author_id"], name: "index_authors_books_on_author_id"
+    t.index ["book_id"], name: "index_authors_books_on_book_id"
+  end
+
   create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "page_number", null: false
     t.string "title", null: false
     t.string "language", null: false
-    t.string "category", default: [], array: true
-    t.string "authors", default: [], array: true
     t.text "description"
     t.string "isbn", null: false
     t.integer "inventory", default: 1, null: false
@@ -29,6 +44,20 @@ ActiveRecord::Schema.define(version: 2019_09_26_125303) do
     t.string "publishers", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "books_categories", id: false, force: :cascade do |t|
+    t.uuid "book_id"
+    t.uuid "category_id"
+    t.index ["book_id"], name: "index_books_categories_on_book_id"
+    t.index ["category_id"], name: "index_books_categories_on_category_id"
+  end
+
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

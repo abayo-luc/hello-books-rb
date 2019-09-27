@@ -6,4 +6,6 @@ class Book < ApplicationRecord
               with: /\A(?:ISBN(?:-1[03])?:?●)?(?=[-0-9●]{17}$|[-0-9X●]{13}$|[0-9X]{10}$)(?:97[89][-●]?)?[0-9]{1,5}[-●]?(?:[0-9]+[-●]?){2}[0-9X]\z/i,
               message: 'Invalid ISBN'
             }
+  has_and_belongs_to_many :categories, join_table: 'books_categories'
+  has_and_belongs_to_many :authors, join_table: 'authors_books'
 end

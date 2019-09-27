@@ -7,11 +7,16 @@ class ApplicationController < ActionController::API
     raise ExceptionHandler::NotAuthorized unless current_user&.super_admin? || current_user&.admin?
   end
 
+  def is_super_admin?
+    raise ExceptionHandler::NotAuthorized unless current_user&.super_admin?
+  end
+
   rescue_from ActiveRecord::RecordNotFound do
     render json: {
       error: 'Not found'
     }, status: :not_found
   end
+
   rescue_from ExceptionHandler::NotAuthorized do
     render json: {
      error: 'You are not authorized to perfom this action'
