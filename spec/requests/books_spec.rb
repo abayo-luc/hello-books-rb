@@ -57,7 +57,15 @@ RSpec.describe 'Books API' do
         expect(response).to have_http_status(200)
         expect(json['data']['title']).to eql(title)
       end
-
+      it 'should return title arleady taken' do
+        book = Book.create(title: 'Imigani Nyarwanda', language: 'Kinyarwanda', isbn: Time.now.to_i, page_number: 123)
+        put "/api/v1/books/#{book_id}", params: { title: book.title },
+         headers: {
+            'Authorization' => admin_token
+        }
+        expect(response).to have_http_status(:bad_request)
+        expect(json['errors']['title']).to contain_exactly('has already been taken')
+      end
       it 'should return not found' do
         put "/api/v1/books/#{book_id}kajf", headers: {
          'Authorization' => admin_token
@@ -91,6 +99,12 @@ RSpec.describe 'Books API' do
         expect(response).to have_http_status(400)
         expect(json.keys).to contain_exactly('message', 'errors')
         expect(json['errors'].keys).to contain_exactly('title', 'isbn', 'language', 'page_number')
+      end
+      it 'shoult return validation error on invalid categories' do
+        post '/api/v1/books', params: { **book_attributes, categories: 'hello word' }, headers: { 'Authorization' => admin_token }
+        expect(response).to have_http_status(400)
+        expect(json.keys).to contain_exactly('message', 'errors')
+        expect(json['errors']).to contain_exactly('Categories should be an array of strings')
       end
     end
   end

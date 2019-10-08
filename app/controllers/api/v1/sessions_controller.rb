@@ -6,13 +6,9 @@ class Api::V1::SessionsController < ApplicationController
       jwt = WebToken.encode(user)
       render :create, status: :ok, locals: { token: jwt }
     else
-      render json: {
-          error: 'Invalid email or password'
-      }, status: :bad_request
+      raise 'Invalid email or password'
     end
-    rescue => e
-      render json: {
-         error: e.message
-     }, status: :bad_request
+  rescue => e
+    raise ExceptionHandler::CustomError, e.message
   end
 end

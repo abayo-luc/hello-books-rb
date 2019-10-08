@@ -6,7 +6,9 @@ class Api::V1::BooksController < ApplicationController
   end
   def create
     @book = Book.new(book_params)
+    categories = Category.find_categories(book_params[:categories] || [])
     if @book.save
+      @book.categories << categories if categories.size >= 1
       render :create, status: :created
     else
       render json: {
@@ -14,6 +16,8 @@ class Api::V1::BooksController < ApplicationController
         errors: @book.errors
         }, status: :bad_request
     end
+    rescue
+      raise ExceptionHandler::CustomError, 'Categories should be an array of strings'
   end
   def update
     @book = find_book
@@ -56,7 +60,7 @@ class Api::V1::BooksController < ApplicationController
     end
     def book_params
       params.permit(:page_number,
-        :title, :language, :category, :authors,
+        :title, :language, :categories, :authors,
         :description, :isbn, :inventory,
         :published_at)
     end

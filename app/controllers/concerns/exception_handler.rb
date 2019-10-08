@@ -8,4 +8,5 @@ module ExceptionHandler
   class ExpiredSignature < StandardError; end
   class DecodeError < StandardError; end
   class NotAuthorized < StandardError; end
+  class CustomError < StandardError; end
 end
