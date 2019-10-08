@@ -22,6 +22,12 @@ class ApplicationController < ActionController::API
      error: 'You are not authorized to perfom this action'
     }, status: :forbidden
   end
+  rescue_from ExceptionHandler::CustomError do |e|
+    render json: {
+    message: 'Action failed',
+     errors: [e.message]
+    }, status: :bad_request
+  end
 
   private
     def authenticate_request

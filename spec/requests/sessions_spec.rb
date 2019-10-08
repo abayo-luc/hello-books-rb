@@ -16,7 +16,7 @@ RSpec.describe 'Session Api', type: :request do
       before { post '/api/v1/sessions', params: { email: 'user@me.com', password: 'password' } }
       it 'should return error' do
         expect(response).to have_http_status(400)
-        expect(json['error']).to eql('Invalid email or password')
+        expect(json['errors']).to contain_exactly('Invalid email or password')
       end
     end
   end

@@ -29,6 +29,18 @@ RSpec.describe 'Category Request', tye: :request do
         expect(response).to have_http_status(:forbidden)
       end
     end
+    context 'when category already exit' do
+      it 'should create new category' do
+        Category.create(name: 'Good to Us')
+        post '/api/v1/categories', params: { name: 'good to us' },
+        headers: {
+            'Authorization' => admin_token
+        }
+        expect(response).to have_http_status(:bad_request)
+        expect(json.keys).to contain_exactly('message', 'errors')
+        expect(json['errors']['name']).to contain_exactly('has already been taken')
+      end
+    end
   end
 
   describe 'DELETE /categories' do
