@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
 
   rescue_from ActiveRecord::RecordNotFound do
     render json: {
-      error: 'Not found'
+      error: 'Record not found'
     }, status: :not_found
   end
 

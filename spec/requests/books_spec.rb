@@ -41,7 +41,6 @@ RSpec.describe 'Books API' do
               'Authorization' => user_token
             }
         expect(response).to have_http_status(404)
-        expect(json['error']).to eql('Not found')
       end
     end
   end
