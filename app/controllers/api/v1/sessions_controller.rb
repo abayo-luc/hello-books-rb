@@ -8,7 +8,7 @@ class Api::V1::SessionsController < ApplicationController
     else
       raise 'Invalid email or password'
     end
-  rescue => e
+  rescue StandardError => e
     raise ExceptionHandler::CustomError, e.message
   end
 end

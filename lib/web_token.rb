@@ -2,7 +2,7 @@ module WebToken
   SECRET = ENV['JWT_SECRET']
   class << self
     def decode(token)
-      JWT.decode(token, SECRET, true, { algorithm: 'HS256' })[0]
+      JWT.decode(token, SECRET, true, algorithm: 'HS256')[0]
     # raise custom error to be handled by custom handler
     rescue JWT::ExpiredSignature
       raise ExceptionHandler::ExpiredSignature, 'Token has expired'

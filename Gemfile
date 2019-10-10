@@ -25,10 +25,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
 gem 'devise'
-gem 'jwt'
 gem 'dotenv-rails'
+gem 'jwt'
+gem 'rack-cors'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -45,13 +45,13 @@ group :development do
 end
 
 group :test do
+  gem 'codacy-coverage', require: false
+  gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
-  gem 'coveralls', require: false
-  gem 'codacy-coverage', require: false
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

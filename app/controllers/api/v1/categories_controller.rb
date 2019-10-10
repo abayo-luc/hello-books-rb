@@ -20,6 +20,7 @@ class Api::V1::CategoriesController < ApplicationController
   def destroy
     category = Category.find_by_id(params[:id])
     raise ActiveRecord::RecordNotFound unless category
+
     category.destroy
     render json: {
       message: 'Category remove successuflly'

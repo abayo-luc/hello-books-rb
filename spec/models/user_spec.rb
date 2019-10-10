@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User,  type: :model do
+RSpec.describe User, type: :model do
   let(:user) { create(:user) }
   subject { described_class.new(password: 'password', email: 'luc@example.com') }
   describe 'User Validation' do
@@ -48,7 +48,7 @@ RSpec.describe User,  type: :model do
     context 'should not update user if' do
       it 'role is not user or admin' do
         user.change_role('hello')
-      rescue => e
+      rescue StandardError => e
         expect(e.message).to eql('Role should be user or admin')
       end
     end

@@ -5,7 +5,9 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
+end
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'database_cleaner'
@@ -20,10 +22,10 @@ SimpleCov.start 'rails' do
   add_filter '/test/' # for minitest
 end
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  Codacy::Formatter,
-  Coveralls::SimpleCov::Formatter
-])
+                                                                 SimpleCov::Formatter::HTMLFormatter,
+                                                                 Codacy::Formatter,
+                                                                 Coveralls::SimpleCov::Formatter
+                                                               ])
 
 SimpleCov.start
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -64,9 +66,9 @@ RSpec.configure do |config|
   # instead of true.
   config.before(:suite) do
     config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with(:truncation)
+    end
   end
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and

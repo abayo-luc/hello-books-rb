@@ -20,8 +20,7 @@ RSpec.describe 'Password', type: :request do
       before(:example) do
         @user = User.create(email:
             "#{Time.now.to_i}@#{Faker::Device.manufacturer.downcase!}.com",
-            password: Faker::String.random(length: 8),
-        )
+                            password: Faker::String.random(length: 8))
         @user.send_reset_password_instructions
       end
       it 'should not update without password params' do
@@ -32,7 +31,7 @@ RSpec.describe 'Password', type: :request do
 
       it 'should not update without password params' do
         put "/api/v1/users/password?token=#{@user.reset_password_token}", params: {
-            password: 'password', password_confirmation: 'qwerty'
+          password: 'password', password_confirmation: 'qwerty'
         }
         expect(response).to have_http_status(:bad_request)
         expect(json['errors']).to contain_exactly("Password confirmation doesn't match Password")
@@ -40,7 +39,7 @@ RSpec.describe 'Password', type: :request do
 
       it 'should update password with valid params' do
         put "/api/v1/users/password?token=#{@user.reset_password_token}", params: {
-            password: 'password', password_confirmation: 'password'
+          password: 'password', password_confirmation: 'password'
         }
         expect(response).to have_http_status(:ok)
       end
