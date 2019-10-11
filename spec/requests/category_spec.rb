@@ -14,18 +14,18 @@ RSpec.describe 'Category Request', tye: :request do
     context 'when is super_admin' do
       it 'should create new category' do
         post '/api/v1/categories', params: { name: "hello #{Time.now}" },
-        headers: {
-            'Authorization' => admin_token
-        }
+                                   headers: {
+                                     'Authorization' => admin_token
+                                   }
         expect(response).to have_http_status(:created)
       end
     end
     context 'when is not super admin' do
       it 'should create new category' do
         post '/api/v1/categories', params: { name: "hello #{Time.now}" },
-        headers: {
-            'Authorization' => user_token
-        }
+                                   headers: {
+                                     'Authorization' => user_token
+                                   }
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -33,9 +33,9 @@ RSpec.describe 'Category Request', tye: :request do
       it 'should create new category' do
         Category.create(name: 'Good to Us')
         post '/api/v1/categories', params: { name: 'good to us' },
-        headers: {
-            'Authorization' => admin_token
-        }
+                                   headers: {
+                                     'Authorization' => admin_token
+                                   }
         expect(response).to have_http_status(:bad_request)
         expect(json.keys).to contain_exactly('message', 'errors')
         expect(json['errors']['name']).to contain_exactly('has already been taken')
@@ -47,27 +47,27 @@ RSpec.describe 'Category Request', tye: :request do
     context 'when is super_admin' do
       it 'should create new category' do
         delete "/api/v1/categories/#{categories.first.id}",
-        headers: {
-            'Authorization' => admin_token
-        }
+               headers: {
+                 'Authorization' => admin_token
+               }
         expect(response).to have_http_status(:ok)
       end
     end
     context 'when id is invalid' do
       it 'should create new category' do
         delete '/api/v1/categories/hello',
-        headers: {
-            'Authorization' => admin_token
-        }
+               headers: {
+                 'Authorization' => admin_token
+               }
         expect(response).to have_http_status(:not_found)
       end
     end
     context 'when is not super admin' do
       it 'should create new category' do
         delete "/api/v1/categories/#{categories.second.id}",
-        headers: {
-            'Authorization' => user_token
-        }
+               headers: {
+                 'Authorization' => user_token
+               }
         expect(response).to have_http_status(:forbidden)
       end
     end

@@ -6,13 +6,16 @@ RSpec.describe 'Books API' do
   let(:user_token) { auth_user(create(:user)) }
   let(:admin_token) { auth_user(create(:user, role: 'admin')) }
   let(:second_id) { create(:book).id }
-  let(:book_attributes) {  { title: Faker::Book.unique.title,
-        isbn: Faker::Number.unique.number(digits: 10), language: 'French', page_number: 385 }
-     }
+  let(:book_attributes) do
+    { title: Faker::Book.unique.title,
+      isbn: Faker::Number.unique.number(digits: 10), language: 'French', page_number: 385 }
+  end
   describe 'GET /books' do
-    before { get '/api/v1/books', headers: {
+    before do
+      get '/api/v1/books', headers: {
         'Authorization' => user_token
-    }}
+      }
+    end
     it 'user should get all book' do
       expect(response).to have_http_status(200)
       expect(json.keys).to contain_exactly('message', 'data')
@@ -38,8 +41,8 @@ RSpec.describe 'Books API' do
 
       it 'shoult reutrn not found' do
         get '/api/v1/books/tyuiaf', headers: {
-              'Authorization' => user_token
-            }
+          'Authorization' => user_token
+        }
         expect(response).to have_http_status(404)
       end
     end
@@ -50,33 +53,35 @@ RSpec.describe 'Books API' do
       it 'shoult update book' do
         title = 'If You Go Down Like Economy'
         put "/api/v1/books/#{book_id}", params: { title: title },
-         headers: {
-            'Authorization' => admin_token
-        }
+                                        headers: {
+                                          'Authorization' => admin_token
+                                        }
         expect(response).to have_http_status(200)
         expect(json['data']['title']).to eql(title)
       end
       it 'should return title arleady taken' do
         book = Book.create(title: 'Imigani Nyarwanda', language: 'Kinyarwanda', isbn: Time.now.to_i, page_number: 123)
         put "/api/v1/books/#{book_id}", params: { title: book.title },
-         headers: {
-            'Authorization' => admin_token
-        }
+                                        headers: {
+                                          'Authorization' => admin_token
+                                        }
         expect(response).to have_http_status(:bad_request)
         expect(json['errors']['title']).to contain_exactly('has already been taken')
       end
       it 'should return not found' do
         put "/api/v1/books/#{book_id}kajf", headers: {
-         'Authorization' => admin_token
+          'Authorization' => admin_token
         }
         expect(response).to have_http_status(404)
       end
     end
 
     context 'when is not admin' do
-      before { put "/api/v1/books/#{book_id}", headers: {
+      before do
+        put "/api/v1/books/#{book_id}", headers: {
           'Authorization' => user_token
-      }}
+        }
+      end
       it 'should return unthorized' do
         expect(response).to have_http_status(403)
       end
@@ -85,9 +90,10 @@ RSpec.describe 'Books API' do
 
   describe 'POST /books' do
     context 'when is admin' do
-      before { post '/api/v1/books', params: book_attributes,
-        headers: { 'Authorization' => admin_token }
-      }
+      before do
+        post '/api/v1/books', params: book_attributes,
+                              headers: { 'Authorization' => admin_token }
+      end
       it 'shoult add a new book' do
         expect(response).to have_http_status(201)
         expect(json.keys).to contain_exactly('message', 'data')
@@ -112,24 +118,24 @@ RSpec.describe 'Books API' do
     context 'when is admin' do
       it 'should delete book successuflly' do
         delete "/api/v1/books/#{second_id}",
-         headers: {
-            'Authorization' => admin_token
-        }
+               headers: {
+                 'Authorization' => admin_token
+               }
         expect(response).to have_http_status(204)
       end
       it 'should return not found' do
         delete "/api/v1/books/#{second_id}90",
-         headers: {
-            'Authorization' => admin_token
-        }
+               headers: {
+                 'Authorization' => admin_token
+               }
         expect(response).to have_http_status(404)
       end
 
       it 'shoult return access denied' do
         delete "/api/v1/books/#{second_id}",
-         headers: {
-            'Authorization' => user_token
-        }
+               headers: {
+                 'Authorization' => user_token
+               }
         expect(response).to have_http_status(403)
       end
     end

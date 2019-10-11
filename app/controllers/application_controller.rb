@@ -4,7 +4,9 @@ class ApplicationController < ActionController::API
   include ExceptionHandler
 
   def authorize_admin
-    raise ExceptionHandler::NotAuthorized unless current_user&.super_admin? || current_user&.admin?
+    unless current_user&.super_admin? || current_user&.admin?
+      raise ExceptionHandler::NotAuthorized
+    end
   end
 
   def is_super_admin?
@@ -19,28 +21,38 @@ class ApplicationController < ActionController::API
 
   rescue_from ExceptionHandler::NotAuthorized do
     render json: {
-     error: 'You are not authorized to perfom this action'
+      error: 'You are not authorized to perfom this action'
     }, status: :forbidden
   end
   rescue_from ExceptionHandler::CustomError do |e|
     render json: {
-    message: 'Action failed',
-     errors: [e.message]
+      message: 'Action failed',
+      errors: [e.message]
     }, status: :bad_request
+  end
+
+  rescue_from ExceptionHandler::NotConfirmed do
+    render json: {
+      message: 'Please verify your account first!'
+    }, status: :forbidden
   end
 
   private
     def authenticate_request
       token = request.headers['Authorization']
       decoded = WebToken.decode(token)
-    rescue
+    rescue StandardError
       @current_user = nil
-      render json: { error: 'The user must provide a
-         valid token to authenticate' },
-         status: 401 unless @current_user
+      unless @current_user
+        render json: { error: 'The user must provide a
+           valid token to authenticate' },
+               status: 401
+      end
     else
-      @current_user = User.where(id: decoded['id'],
-        email: decoded['email']
-        )[0]
+      user = User.where(id: decoded['id'],
+                        email: decoded['email'])[0]
+      raise ExceptionHandler::NotConfirmed unless user&.confirmed?
+
+      @current_user = user
     end
 end

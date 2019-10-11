@@ -31,7 +31,9 @@ m = Module.new do
       if update_index && update_index.succ == i && a =~ Gem::Version::ANCHORED_VERSION_PATTERN
         bundler_version = a
       end
-      next unless a =~ /\A--bundler(?:[= ](#{Gem::Version::VERSION_PATTERN}))?\z/
+      unless a =~ /\A--bundler(?:[= ](#{Gem::Version::VERSION_PATTERN}))?\z/
+        next
+      end
 
       bundler_version = Regexp.last_match(1) || '>= 0.a'
       update_index = i
@@ -59,7 +61,9 @@ m = Module.new do
     return unless File.file?(lockfile)
 
     lockfile_contents = File.read(lockfile)
-    return unless lockfile_contents =~ /\n\nBUNDLED WITH\n\s{2,}(#{Gem::Version::VERSION_PATTERN})\n/
+    unless lockfile_contents =~ /\n\nBUNDLED WITH\n\s{2,}(#{Gem::Version::VERSION_PATTERN})\n/
+      return
+    end
 
     Regexp.last_match(1)
   end
@@ -90,7 +94,9 @@ m = Module.new do
     require_error = activation_error_handling do
       require 'bundler/version'
     end
-    return if require_error.nil? && Gem::Requirement.new(bundler_version).satisfied_by?(Gem::Version.new(Bundler::VERSION))
+    if require_error.nil? && Gem::Requirement.new(bundler_version).satisfied_by?(Gem::Version.new(Bundler::VERSION))
+      return
+    end
 
     warn "Activating bundler (#{bundler_version}) failed:\n#{gem_error.message}\n\nTo install the version of bundler this project requires, run `gem install bundler -v '#{bundler_version}'`"
     exit 42

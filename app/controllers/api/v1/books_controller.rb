@@ -4,6 +4,7 @@ class Api::V1::BooksController < ApplicationController
     @books = Book.all
     render :index, status: :ok
   end
+
   def create
     @book = Book.new(book_params)
     categories = Category.find_categories(book_params[:categories] || [])
@@ -14,17 +15,18 @@ class Api::V1::BooksController < ApplicationController
       render json: {
         message: 'Book registration Failed',
         errors: @book.errors
-        }, status: :bad_request
+      }, status: :bad_request
     end
-    rescue
-      raise ExceptionHandler::CustomError, 'Categories should be an array of strings'
+  rescue StandardError
+    raise ExceptionHandler::CustomError, 'Categories should be an array of strings'
   end
+
   def update
     @book = find_book
     begin
       @book.update!(book_params)
       render :update, status: :ok
-    rescue
+    rescue StandardError
       render json: {
         message: 'Updating book failed',
         errors: @book.errors
@@ -44,7 +46,7 @@ class Api::V1::BooksController < ApplicationController
       render json: {
         message: 'Book deletes successuflly'
       }, status: :no_content
-    rescue => _e
+    rescue StandardError => _e
       render json: {
         message: 'Deleting book failed',
         errors: @book.errors
@@ -56,12 +58,14 @@ class Api::V1::BooksController < ApplicationController
     def find_book
       book = Book.find_by_id(params[:id])
       raise ActiveRecord::RecordNotFound unless book
+
       book
     end
+
     def book_params
       params.permit(:page_number,
-        :title, :language, :categories, :authors,
-        :description, :isbn, :inventory,
-        :published_at)
+                    :title, :language, :categories, :authors,
+                    :description, :isbn, :inventory,
+                    :published_at)
     end
 end

@@ -9,7 +9,7 @@ RSpec.describe Category, type: :model do
   end
   describe '#actions' do
     it 'should down case category name before save' do
-      category =  described_class.new(name: 'HELLO book')
+      category = described_class.new(name: 'HELLO book')
       category.save!
       expect(category.name).to eql('Hello Book')
     end
@@ -19,17 +19,17 @@ RSpec.describe Category, type: :model do
     context 'shoiuld raise an error ' do
       it 'if argument is not an array' do
         described_class.find_categories('yes')
-      rescue => e
+      rescue StandardError => e
         expect(e.message).to eql('Categories should be an arry of strings')
       end
       it 'if argument is not an array of string ' do
         described_class.find_categories([{ 'name' => 'hello word' }])
-      rescue => e
+      rescue StandardError => e
         expect(e.message).to eql('Categories should be an arry of strings')
       end
       it 'if argument is an empty array' do
         described_class.find_categories([])
-      rescue => e
+      rescue StandardError => e
         expect(e.message).to eql('Categories should be an arry of strings')
       end
     end

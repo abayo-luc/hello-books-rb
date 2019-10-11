@@ -16,9 +16,9 @@ RSpec.describe Book, type: :model do
     end
 
     describe 'isbn validation' do
-      newBook = described_class.new({ title: Faker::Book.unique.title,
-        isbn: '978-0-596-52068-7',
-        language: 'French', page_number: 245 })
+      newBook = described_class.new(title: Faker::Book.unique.title,
+                                    isbn: '978-0-596-52068-7',
+                                    language: 'French', page_number: 245)
       context 'when isbn is valid' do
         it 'book should be valid' do
           newBook.isbn = '978-0-596-52068-7'

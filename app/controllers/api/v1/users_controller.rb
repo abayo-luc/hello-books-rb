@@ -6,8 +6,8 @@ class Api::V1::UsersController < ApplicationController
       render :create, status: :created
     else
       render json: {
-          message: 'User registration faild',
-          errors: @user.errors
+        message: 'User registration faild',
+        errors: @user.errors
       }, status: :bad_request
     end
   end
