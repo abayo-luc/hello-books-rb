@@ -1,7 +1,7 @@
 class Api::V1::PasswordController < ApplicationController
   skip_before_action :authenticate_request
   def create
-    @user = User.find_by(email: params[:email])
+    @user = User.find_by(email: reset_params[:email])
     raise ActiveRecord::RecordNotFound unless @user
 
     begin
