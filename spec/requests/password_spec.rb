@@ -1,3 +1,4 @@
+require 'rails_helper'
 RSpec.describe 'Password', type: :request do
   let(:user) { create(:user) }
   describe 'POST /users/password' do

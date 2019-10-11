@@ -22,6 +22,9 @@ Rails.application.routes.draw do
       get '/categories', to: 'categories#index'
       post'/categories', to: 'categories#create'
       delete '/categories/:id', to: 'categories#destroy'
+     # profiles
+     get '/profiles', to: 'profiles#index'
+     get '/profiles/:id', to: 'profiles#show'
     end
   end
 end
