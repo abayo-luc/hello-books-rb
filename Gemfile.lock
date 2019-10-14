@@ -64,6 +64,10 @@ GEM
     byebug (11.0.1)
     codacy-coverage (2.1.0)
       simplecov
+    codecov (0.1.15)
+      json
+      simplecov
+      url
     concurrent-ruby (1.1.5)
     coveralls (0.7.1)
       multi_json (~> 1.3)
@@ -247,6 +251,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.6)
     unicode-display_width (1.6.0)
+    url (0.3.2)
     warden (1.2.8)
       rack (>= 2.0.6)
     websocket-driver (0.7.1)
@@ -261,6 +266,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   codacy-coverage
+  codecov
   coveralls
   database_cleaner
   devise
