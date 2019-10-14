@@ -25,6 +25,8 @@ Rails.application.routes.draw do
      # profiles
      get '/profiles', to: 'profiles#index'
      get '/profiles/:id', to: 'profiles#show'
+     put '/profiles/update', to: 'profiles#update'
+     get '/users/current', to: 'users#show'
     end
   end
 end
