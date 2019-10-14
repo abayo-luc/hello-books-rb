@@ -11,6 +11,12 @@ class Api::V1::UsersController < ApplicationController
       }, status: :bad_request
     end
   end
+  def show
+    render json: {
+      message: 'Success',
+      data: @current_user
+    }
+  end
 
   private
     def user_params

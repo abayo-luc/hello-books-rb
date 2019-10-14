@@ -3,7 +3,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable
   validates_format_of :email, with: Devise.email_regexp, message: 'Invalid email'
-
+  validates :phone_number, allow_nil: true, numericality: true, length: { minimum: 10, maximum: 15 }
   def formated_email
     email&.downcase
   end

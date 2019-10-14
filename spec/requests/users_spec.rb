@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Users Api', type: :request do
+  let(:user) { create(:user) }
+  let(:token) { auth_user(user) }
   describe 'POST /users' do
     let(:valid_attributes) { { email: 'valid@example.com', password: 'password', first_name: 'Luc', last_name: 'Abayo' } }
     context 'when request is valid' do
@@ -19,6 +21,19 @@ RSpec.describe 'Users Api', type: :request do
       it 'should not create user' do
         expect(response).to have_http_status(400)
       end
+    end
+  end
+
+  describe 'GET /users/current' do
+    it 'should return current user' do
+      get '/api/v1/users/current', headers: { 'Authorization' => token }
+      expect(response).to have_http_status(:ok)
+      expect(json['data']['email']).to eql(user.email)
+    end
+
+    it 'should return unauthorized for invalid token' do
+      get '/api/v1/users/current', headers: { 'Authorization' => 'akdjf' }
+      expect(response).to have_http_status(401)
     end
   end
 end

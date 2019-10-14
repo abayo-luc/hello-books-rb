@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+require 'simplecov'
+SimpleCov.start 'rails' do
+  add_filter '/bin/'
+  add_filter '/db/'
+  add_filter '/spec/' # for rspec
+  add_filter '/test/' # for minitest
+end
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -11,21 +18,14 @@ end
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'database_cleaner'
-require 'simplecov'
 require 'coveralls'
 require 'codacy-coverage'
 
-SimpleCov.start 'rails' do
-  add_filter '/bin/'
-  add_filter '/db/'
-  add_filter '/spec/' # for rspec
-  add_filter '/test/' # for minitest
-end
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-                                                                 SimpleCov::Formatter::HTMLFormatter,
-                                                                 Codacy::Formatter,
-                                                                 Coveralls::SimpleCov::Formatter
-                                                               ])
+  SimpleCov::Formatter::HTMLFormatter,
+  Codacy::Formatter,
+  Coveralls::SimpleCov::Formatter
+])
 
 SimpleCov.start
 # Requires supporting ruby files with custom matchers and macros, etc, in
