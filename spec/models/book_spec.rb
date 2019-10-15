@@ -44,4 +44,11 @@ RSpec.describe Book, type: :model do
       expect(assoc.macro).to eql(:has_and_belongs_to_many)
     end
   end
+
+  describe 'Book by category' do
+    it 'should return empty array' do
+      books = described_class.find_all(category: "#{Time.now}")
+      expect(books.size).to eql(0)
+    end
+  end
 end

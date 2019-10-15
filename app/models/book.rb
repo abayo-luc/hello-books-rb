@@ -8,4 +8,11 @@ class Book < ApplicationRecord
             }
   has_and_belongs_to_many :categories, join_table: 'books_categories'
   has_and_belongs_to_many :authors, join_table: 'authors_books'
+  def self.find_all(category:)
+    if category
+      joins(:categories).where('categories.name like ?', "%#{category.downcase.titleize}%")
+    else
+      all
+    end
+  end
 end
