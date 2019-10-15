@@ -1,15 +1,14 @@
 class Api::V1::BooksController < ApplicationController
   before_action :authorize_admin, except: %i[index show]
   def index
-    @books = Book.all
+    @books = Book.find_all(category: params[:category])
     render :index, status: :ok
   end
 
   def create
     @book = Book.new(book_params)
-    categories = Category.find_categories(book_params[:categories] || [])
     if @book.save
-      @book.categories << categories if categories.size >= 1
+      add_categories(@book)
       render :create, status: :created
     else
       render json: {
@@ -25,6 +24,7 @@ class Api::V1::BooksController < ApplicationController
     @book = find_book
     begin
       @book.update!(book_params)
+      add_categories(@book)
       render :update, status: :ok
     rescue StandardError
       render json: {
@@ -55,6 +55,10 @@ class Api::V1::BooksController < ApplicationController
  end
 
   private
+    def add_categories(book)
+      categories = Category.find_categories(params[:categories] || [])
+      book.categories << categories if categories.size >= 1
+    end
     def find_book
       book = Book.find_by_id(params[:id])
       raise ActiveRecord::RecordNotFound unless book
