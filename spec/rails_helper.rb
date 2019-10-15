@@ -18,11 +18,13 @@ end
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'database_cleaner'
+require 'codecov'
 require 'coveralls'
 require 'codacy-coverage'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::Codecov,
   Codacy::Formatter,
   Coveralls::SimpleCov::Formatter
 ])
