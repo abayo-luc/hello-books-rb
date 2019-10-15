@@ -18,7 +18,6 @@ AllCops:
     # Additional exclude files by rubocop-rails_config
     - "bin/**/*"
     - "config/**/*"
-    - "db/**/*"
 
 Performance:
   Exclude:

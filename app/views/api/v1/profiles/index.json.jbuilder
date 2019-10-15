@@ -6,7 +6,7 @@ json.data @profiles do |profile|
                 :last_name,
                 :email,
                 :role,
-                :description,
+                :bio,
                 :phone_number,
                 :address)
 end
