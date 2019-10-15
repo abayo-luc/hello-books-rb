@@ -26,6 +26,10 @@ RSpec.describe 'Books API' do
       get '/api/v1/books'
       expect(response).to have_http_status(401)
     end
+    it 'shoult return 401 error' do
+      get '/api/v1/books?category=Tech', headers: { 'Authorization' => user_token }
+      expect(response).to have_http_status(200)
+    end
   end
 
   describe 'GET /books/:id' do
