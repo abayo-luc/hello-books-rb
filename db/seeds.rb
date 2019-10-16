@@ -13,7 +13,7 @@ require 'faker'
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     address: Faker::Address.street_address,
-    bio: Faker::String.random(length: [0, 250]),
+    bio: Faker::Lorem.paragraph_by_chars(number: 250),
     phone_number: Faker::PhoneNumber.unique.cell_phone,
     confirmed_at: Faker::Date.between(from: 7.days.ago, to: Date.today)
   )
@@ -31,5 +31,14 @@ end
 50.times do
   Category.create(
     name: Faker::Book.genre
+  )
+end
+
+30.times do
+  Author.create(
+    name: Faker::Name.name,
+    country: Faker::Nation.nationality,
+    bio: Faker::Lorem.paragraph_by_chars(number: 250),
+    birth_date: Faker::Date.between(from: 100.years.ago, to: 30.years.ago)
   )
 end

@@ -29,6 +29,10 @@ Rails.application.routes.draw do
       get '/users/current', to: 'users#show'
       #authors
       get '/authors', to: 'authors#index'
+      post '/authors', to: 'authors#create'
+      get '/authors/:id', to: 'authors#show'
+      put '/authors/:id', to: 'authors#update'
+      delete '/authors/:id', to: 'authors#destroy'
     end
   end
 end
