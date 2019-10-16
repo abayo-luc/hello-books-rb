@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Books API' do
-  let!(:books) { create_list(:book, 10) }
+  let!(:books) { create_list(:book, 5) }
   let(:book_id) { books.first.id }
   let(:user_token) { auth_user(create(:user)) }
   let(:admin_token) { auth_user(create(:user, role: 'admin')) }
@@ -19,12 +19,16 @@ RSpec.describe 'Books API' do
     it 'user should get all book' do
       expect(response).to have_http_status(200)
       expect(json.keys).to contain_exactly('message', 'data')
-      expect(json['data'].size >= 10).to be_truthy
+      expect(json['data'].size >= 5).to be_truthy
     end
 
     it 'shoult return 401 error' do
       get '/api/v1/books'
       expect(response).to have_http_status(401)
+    end
+    it 'shoult return 401 error' do
+      get '/api/v1/books?category=Tech', headers: { 'Authorization' => user_token }
+      expect(response).to have_http_status(200)
     end
   end
 

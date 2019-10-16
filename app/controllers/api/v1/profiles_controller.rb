@@ -32,6 +32,6 @@ class Api::V1::ProfilesController < ApplicationController
     end
 
     def profile_attributes
-      params.permit(:first_name, :last_name, :description, :phone_number, :address)
+      params.permit(:first_name, :last_name, :bio, :phone_number, :address)
     end
 end
