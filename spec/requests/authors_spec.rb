@@ -51,6 +51,10 @@ RSpec.describe 'Request API' do
         put "/api/v1/authors/#{author.id}", headers: { 'Authorization' => user_token }
         expect(response).to have_http_status(:forbidden)
       end
+      it 'should return validation errors' do
+        put "/api/v1/authors/#{author.id}", params: { bio: 'Hello world' }, headers: { 'Authorization' => token }
+        expect(response).to have_http_status(:bad_request)
+      end
     end
     context 'if ID does not exit in the database' do
       it 'should return not found(404)' do

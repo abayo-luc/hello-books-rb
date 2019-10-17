@@ -43,8 +43,4 @@ class Api::V1::ConfirmationsController < ApplicationController
 
       user
     end
-
-    def confirmation_params
-      params.permit(:email, :token)
-    end
 end

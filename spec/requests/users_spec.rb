@@ -35,5 +35,13 @@ RSpec.describe 'Users Api', type: :request do
       get '/api/v1/users/current', headers: { 'Authorization' => 'akdjf' }
       expect(response).to have_http_status(401)
     end
+
+    it 'should return with unauthorized for unverified account' do
+      user = User.create(email: "me#{Time.now.to_i}@example.com", password: 'password')
+      token = auth_user(user)
+      get '/api/v1/users/current', headers: { 'Authorization' => token }
+      expect(response).to have_http_status(:forbidden)
+      expect(json['message']).to eql('Please verify your account first!')
+    end
   end
 end
