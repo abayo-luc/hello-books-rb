@@ -6,7 +6,7 @@ class Api::V1::PasswordController < ApplicationController
 
     begin
       @user.send_reset_password_instructions
-    rescue StandardError => e
+    rescue => e
       render json: {
         message: 'Sending reset password instructions failed',
         errors: [e.message]

@@ -22,11 +22,17 @@ Rails.application.routes.draw do
       get '/categories', to: 'categories#index'
       post'/categories', to: 'categories#create'
       delete '/categories/:id', to: 'categories#destroy'
-     # profiles
-     get '/profiles', to: 'profiles#index'
-     get '/profiles/:id', to: 'profiles#show'
-     put '/profiles/update', to: 'profiles#update'
-     get '/users/current', to: 'users#show'
+      # profiles
+      get '/profiles', to: 'profiles#index'
+      get '/profiles/:id', to: 'profiles#show'
+      put '/profiles/update', to: 'profiles#update'
+      get '/users/current', to: 'users#show'
+      #authors
+      get '/authors', to: 'authors#index'
+      post '/authors', to: 'authors#create'
+      get '/authors/:id', to: 'authors#show'
+      put '/authors/:id', to: 'authors#update'
+      delete '/authors/:id', to: 'authors#destroy'
     end
   end
 end

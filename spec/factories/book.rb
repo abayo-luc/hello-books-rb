@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :book do
     page_number { 565 }
-    title { Faker::Book.unique.title }
+    title { "#{Faker::Book.unique.title}-#{Time.now.to_i}" }
     language { 'English' }
     isbn { Faker::Number.unique.number(digits: 10) }
     inventory { 1 }

@@ -29,7 +29,7 @@ class Api::V1::BooksController < ApplicationController
     rescue StandardError
       render json: {
         message: 'Updating book failed',
-        errors: @book.errors
+        errors: @book.errors.size >= 1 ? @book.errors : ['Check if authors or categories are arrays of strings']
       }, status: :bad_request
     end
   end
@@ -46,7 +46,7 @@ class Api::V1::BooksController < ApplicationController
       render json: {
         message: 'Book deletes successuflly'
       }, status: :no_content
-    rescue StandardError => _e
+    rescue StandardError
       render json: {
         message: 'Deleting book failed',
         errors: @book.errors
@@ -57,7 +57,9 @@ class Api::V1::BooksController < ApplicationController
   private
     def add_categories(book)
       categories = Category.find_categories(params[:categories] || [])
+      authors = Author.find_authors(params[:authors] || [])
       book.categories << categories if categories.size >= 1
+      book.authors << authors if authors.size >= 1
     end
     def find_book
       book = Book.find_by_id(params[:id])
