@@ -9,6 +9,7 @@ json.data @books do |book|
             :isbn,
             :inventory,
             :categories,
+            :authors,
             :publishers,
             :published_at,
             :created_at,
