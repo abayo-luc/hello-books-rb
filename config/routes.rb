@@ -34,10 +34,10 @@ Rails.application.routes.draw do
       put '/authors/:id', to: 'authors#update'
       delete '/authors/:id', to: 'authors#destroy'
       #readings 
-      post '/readings/:book_id', to:'readings#create'
+      post '/readings/books/:book_id', to:'readings#create'
       get '/readings', to: 'readings#index'
-      delete '/readings/:book_id', to: 'readings#destroy'
-      put '/readings/:book_id', to: 'readings#update'
+      delete '/readings/books/:book_id', to: 'readings#destroy'
+      put '/readings/:id', to: 'readings#update'
     end
   end
 end

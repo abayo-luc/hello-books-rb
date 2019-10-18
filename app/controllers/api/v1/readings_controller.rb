@@ -22,20 +22,14 @@ class Api::V1::ReadingsController < ApplicationController
       render json: {
           message: "Marked #{@reading.status} successuflly"
       }, status: :ok
-    else
-      render json: {
-          message: 'Action failed, please try again'
-      }, status: :bad_request
     end
   end
   def destroy
-    reading = find_reading
-    reading.destroy!
-    render json: {}, status: :no_content
-    rescue
-      render json: {
-          message: 'Action failed, please try again'
-      }, status: :bad_request
+    reading = Reading.find_by(book_id: params[:book_id], user_id: @current_user.id)
+    raise ActiveRecord::RecordNotFound unless reading
+    if reading.destroy!
+      render json: {}, status: :no_content
+    end
   end
 
   private
@@ -44,8 +38,9 @@ class Api::V1::ReadingsController < ApplicationController
       raise ActiveRecord::RecordNotFound unless book
       book
     end
+
     def find_reading
-      reading = Reading.find_by(book_id: params[:book_id], user_id: @current_user.id)
+      reading = Reading.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound unless reading
       reading
     end
