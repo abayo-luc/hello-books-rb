@@ -1,10 +1,12 @@
 require 'rails_helper'
 RSpec.describe 'Password', type: :request do
-  let(:user) { create(:user) }
+  before(:all) do
+    @user_1 = create(:user)
+  end
   describe 'POST /users/password' do
     context 'if provided email exist' do
       it 'should send reset password instructions' do
-        post '/api/v1/users/password', params: { email: user.email }
+        post '/api/v1/users/password', params: { email: @user_1.email }
         expect(response).to have_http_status(:ok)
       end
     end
@@ -19,9 +21,7 @@ RSpec.describe 'Password', type: :request do
   describe 'PUT /users/password' do
     context 'if provided token is valid' do
       before(:example) do
-        @user = User.create(email:
-            "#{Time.now.to_i}@#{Faker::Device.manufacturer.downcase!}.com",
-                            password: Faker::String.random(length: 8))
+        @user = User.create(email: Faker::Internet.unique.email, password: Faker::String.random(length: 8))
         @user.send_reset_password_instructions
       end
       it 'should not update without password params' do
