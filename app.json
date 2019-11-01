@@ -1,0 +1,13 @@
+{
+    "addons": [
+
+    ],
+    "buildpacks": [
+
+    ],
+    "env": {},
+    "formation": {},
+    "name": "hello-books",
+    "scripts": {},
+    "stack": "heroku-18"
+}
