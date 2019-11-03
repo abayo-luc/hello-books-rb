@@ -3,12 +3,11 @@ class Api::V1::SessionsController < ApplicationController
   def create
     user = User.find_by email: params[:email]
     if user&.valid_password?(params[:password])
+      raise ExceptionHandler::NotConfirmed unless user&.confirmed?
       jwt = WebToken.encode(user)
       render :create, status: :ok, locals: { token: jwt }
     else
-      raise 'Invalid email or password'
+      raise ExceptionHandler::CustomError, 'Invalid email or password'
     end
-  rescue StandardError => e
-    raise ExceptionHandler::CustomError, e.message
   end
 end
