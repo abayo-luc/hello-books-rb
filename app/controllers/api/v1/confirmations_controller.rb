@@ -17,9 +17,11 @@ class Api::V1::ConfirmationsController < ApplicationController
 
   def update
     @user = find_user_by_token
+    jwt = WebToken.encode(@user)
     if @user.confirm
       render json: {
-        message: 'Account confirmed successuflly'
+        message: 'Account confirmed successuflly',
+        token: jwt
       }, status: :ok
     else
       render json: {
