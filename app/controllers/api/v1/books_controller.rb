@@ -71,7 +71,7 @@ class Api::V1::BooksController < ApplicationController
     def book_params
       params.permit(:page_number,
                     :title, :language, :categories, :authors,
-                    :description, :isbn, :inventory,
+                    :description, :isbn, :inventory, :cover_image,
                     :published_at)
     end
 end

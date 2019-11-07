@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_17_151543) do
+ActiveRecord::Schema.define(version: 2019_11_07_133818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2019_10_17_151543) do
     t.string "publishers", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "cover_image", default: "https://res.cloudinary.com/dghepsznx/image/upload/v1549123906/WhatIf/placeholder-image.jpg"
   end
 
   create_table "books_categories", id: false, force: :cascade do |t|

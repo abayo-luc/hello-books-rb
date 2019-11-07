@@ -23,7 +23,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
+ gem 'faker'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'devise'
 gem 'dotenv-rails'
@@ -49,7 +49,6 @@ group :test do
   gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'faker'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'codecov', require: false
