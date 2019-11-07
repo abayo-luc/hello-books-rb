@@ -10,11 +10,8 @@ require 'faker'
   User.create(
     email: Faker::Internet.unique.email,
     password: 'password',
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
     address: Faker::Address.street_address,
     bio: Faker::Lorem.paragraph_by_chars(number: 250),
-    phone_number: Faker::PhoneNumber.unique.cell_phone,
     confirmed_at: Faker::Date.between(from: 7.days.ago, to: Date.today)
   )
 end
@@ -24,7 +21,8 @@ end
     title: Faker::Book.unique.title,
     language: Faker::Nation.language,
     page_number: Faker::Number.between(from: 150, to: 1000),
-    isbn: "#{Faker::Number.unique.number(digits: 10)}"
+    isbn: "#{Faker::Number.unique.number(digits: 10)}",
+    cover_image: Faker::Avatar.image(size: "200x200", format: "jpg")
   )
 end
 

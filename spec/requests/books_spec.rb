@@ -12,7 +12,7 @@ RSpec.describe 'Books API' do
   end
   describe 'GET /books' do
     before do
-      get '/api/v1/books', headers: {
+      get '/api/v1/books?limit=20', headers: {
         'Authorization' => user_token
       }
     end

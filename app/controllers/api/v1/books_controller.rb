@@ -1,7 +1,9 @@
 class Api::V1::BooksController < ApplicationController
   before_action :authorize_admin, except: %i[index show]
   def index
-    @books = Book.find_all(category: params[:category])
+    limit = params[:limit].to_i || 30
+    offset = params[:page].to_i * limit || 0
+    @books = Book.offset(offset).limit(limit)
     render :index, status: :ok
   end
 
@@ -71,7 +73,7 @@ class Api::V1::BooksController < ApplicationController
     def book_params
       params.permit(:page_number,
                     :title, :language, :categories, :authors,
-                    :description, :isbn, :inventory,
+                    :description, :isbn, :inventory, :cover_image,
                     :published_at)
     end
 end
