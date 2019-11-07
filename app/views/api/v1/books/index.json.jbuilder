@@ -3,6 +3,7 @@ json.data @books do |book|
   json.call(book,
             :id,
             :title,
+            :cover_image,
             :description,
             :language,
             :page_number,

@@ -2,6 +2,7 @@ json.message('Success')
 json.data(@book,
           :id,
           :title,
+          :cover_image,
           :description,
           :language,
           :page_number,
