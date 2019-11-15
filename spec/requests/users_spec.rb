@@ -4,7 +4,7 @@ RSpec.describe 'Users Api', type: :request do
   let(:user) { create(:user) }
   let(:token) { auth_user(user) }
   describe 'POST /users' do
-    let(:valid_attributes) { { email: 'valid@example.com', password: 'password', name: 'Luc Abayo'} }
+    let(:valid_attributes) { { email: 'valid@example.com', password: 'password', name: 'Luc Abayo' } }
     context 'when request is valid' do
       before { post '/api/v1/users', params: valid_attributes }
       it 'should create user' do

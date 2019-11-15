@@ -14,8 +14,10 @@ class User < ApplicationRecord
     email&.downcase
   end
   def default_url
-    name = self.name || self.email
-    self.avatar = "https://ui-avatars.com/api/?name=#{name}&size=800"
+    if !self.avatar
+      name = self.name || self.email
+      self.avatar = "https://ui-avatars.com/api/?name=#{name}&size=800"
+    end
   end
   def change_role(role)
     if %w[admin user].include?(role)
