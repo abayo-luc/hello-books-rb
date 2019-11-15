@@ -31,13 +31,11 @@ RSpec.describe 'Profiles' do
   describe 'PUT /profiles/current'  do
     it 'should update current user profile' do
       put '/api/v1/profiles/update', params: {
-        first_name: 'Luc',
-        last_name: 'Abayo',
+        name: 'Luc',
         phone_number: '0789277275'
       }, headers: { 'Authorization' => user_token }
       expect(response).to have_http_status(:ok)
-      expect(json['data']['first_name']).to eql('Luc')
-      expect(json['data']['last_name']).to eql('Abayo')
+      expect(json['data']['name']).to eql('Luc')
     end
     it 'should not update profile for invalid phone number' do
       put '/api/v1/profiles/update', params: {

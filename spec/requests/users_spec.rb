@@ -4,7 +4,7 @@ RSpec.describe 'Users Api', type: :request do
   let(:user) { create(:user) }
   let(:token) { auth_user(user) }
   describe 'POST /users' do
-    let(:valid_attributes) { { email: 'valid@example.com', password: 'password', first_name: 'Luc', last_name: 'Abayo' } }
+    let(:valid_attributes) { { email: 'valid@example.com', password: 'password', name: 'Luc Abayo'} }
     context 'when request is valid' do
       before { post '/api/v1/users', params: valid_attributes }
       it 'should create user' do
@@ -12,12 +12,11 @@ RSpec.describe 'Users Api', type: :request do
         expect(json['message']).to eql('User registered successuflly')
         data = json['data']
         expect(data['email']).to eql('valid@example.com')
-        expect(data['first_name']).to eql('Luc')
-        expect(data['last_name']).to eql('Abayo')
+        expect(data['name']).to eql('Luc Abayo')
       end
     end
     context 'when request is invalid' do
-      before { post '/api/v1/users', params: { first_name: 'luc' } }
+      before { post '/api/v1/users', params: { name: 'luc' } }
       it 'should not create user' do
         expect(response).to have_http_status(400)
       end

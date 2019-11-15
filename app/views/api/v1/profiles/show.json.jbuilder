@@ -1,8 +1,7 @@
 json.message('Success')
 json.data(@profile,
             :id,
-            :first_name,
-            :last_name,
+            :name,
             :email,
             :role,
             :bio,
