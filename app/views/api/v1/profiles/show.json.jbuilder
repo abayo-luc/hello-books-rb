@@ -7,4 +7,5 @@ json.data(@profile,
             :role,
             :bio,
             :phone_number,
-            :address)
+            :address,
+            :avatar)
