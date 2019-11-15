@@ -22,7 +22,7 @@ end
     language: Faker::Nation.language,
     page_number: Faker::Number.between(from: 150, to: 1000),
     isbn: "#{Faker::Number.unique.number(digits: 10)}",
-    cover_image: Faker::Avatar.image(size: "200x200", format: "jpg")
+    cover_image: Faker::Avatar.image(size: '200x200', format: 'jpg')
   )
 end
 

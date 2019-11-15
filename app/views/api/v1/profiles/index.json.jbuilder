@@ -8,5 +8,6 @@ json.data @profiles do |profile|
                 :role,
                 :bio,
                 :phone_number,
-                :address)
+                :address,
+                :avatar)
 end
