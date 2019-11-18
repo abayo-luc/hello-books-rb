@@ -14,9 +14,8 @@ class User < ApplicationRecord
     email&.downcase
   end
   def default_url
-    unless self.avatar?
-      name = "#{self.first_name}+#{self.last_name}" if self.first_name && self.last_name
-      name = self.email unless name
+    if !self.avatar
+      name = self.name || self.email
       self.avatar = "https://ui-avatars.com/api/?name=#{name}&size=800"
     end
   end

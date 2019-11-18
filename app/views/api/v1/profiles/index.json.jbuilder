@@ -2,8 +2,7 @@ json.message('Success')
 json.data @profiles do |profile|
   json.call(profile,
                 :id,
-                :first_name,
-                :last_name,
+                :name,
                 :email,
                 :role,
                 :bio,
